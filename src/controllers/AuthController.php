@@ -85,6 +85,8 @@ class AuthController
 
             if (password_verify($password, $user['password'])) {
                 // Handle success
+                $token = $this->generateToken($user['id']);
+                setcookie('token', $token, time() + 3600, '/', '', false, true); // Set the token as an HTTP-only cookie for 1 hour
                 return $user;
             } else {
                 // Handle incorrect password

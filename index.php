@@ -17,9 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['p
 
     if ($user) {
         print_r($user);
-        // Successful login, generate token and set as a cookie or in the response
-        $token = $authController->generateToken($user['id']);
-        setcookie('token', $token, time() + 3600, '/', '', false, true); // Set the token as an HTTP-only cookie for 1 hour
+        // Successful login, token and cookie are generated.
         // Redirect to the protected page or handle the result accordingly
         header('Location: protected_page.php');
         exit();
