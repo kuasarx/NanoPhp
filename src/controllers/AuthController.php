@@ -86,7 +86,7 @@ class AuthController
             if (password_verify($password, $user['password'])) {
                 // Handle success
                 $token = $this->generateToken($user['id']);
-                setcookie('token', $token, time() + 3600, '/', '', false, true); // Set the token as an HTTP-only cookie for 1 hour
+                setcookie('token', $token, time() + Login::$TokenandCookieExpiration, '/', '', false, true); // Set the token as an HTTP-only cookie for 1 hour
                 return $user;
             } else {
                 // Handle incorrect password
@@ -179,15 +179,16 @@ class AuthController
         $stmt->close();
     }
 
-    public function updateUserAttributes($userId, $attributes = [])
+    
+    private function isUserAttributeExists($userId, $key)
     {
-        $this->deleteUserAttributes($userId);
-
-        foreach ($attributes as $key => $value) {
-            $this->saveUserAttribute($userId, $key, $value);
-        }
-
-        // Handle success or failure
+        $stmt = $this->conn->prepare('SELECT user_id FROM user_attributes WHERE user_id = ? AND attribute_key = ? LIMIT 1');
+        $stmt->bind_param('is', $userId, $key);
+        $stmt->execute();
+        $stmt->store_result();
+        $exists = $stmt->num_rows > 0;
+        $stmt->close();
+        return $exists;
     }
 
     public function deleteUserAttributes($userId)
@@ -244,11 +245,6 @@ class AuthController
 
         $stmt->close();
         return null;
-    }
-
-    public function isAuthenticated()
-    {
-        return isset($_SESSION['user_id']);
     }
 
     public function __destruct()

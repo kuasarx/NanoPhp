@@ -2,9 +2,9 @@
 
 require_once 'src/Config/Database.php';
 require_once 'src/Controllers/AuthController.php';
-require_once 'src/Models/User.php';
 
 use src\Controllers\AuthController;
+
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['password'])) {
