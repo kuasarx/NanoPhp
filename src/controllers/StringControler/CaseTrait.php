@@ -1,27 +1,27 @@
 <?php
 // Case related methods
 
-trait CaseTrait {
-/** Modifyers ////////////////////////////////////////*/
-    
+trait CaseTrait
+{
+
     // Method to convert the string to lowercase
     public function toLowerCase()
     {
         return strtolower($this->string);
     }
-    
+
     // Method to convert the string to uppercase
     public function toUpperCase()
     {
         return strtoupper($this->string);
     }
-    
+
     // Method to convert a string to title case (capitalize the first letter of each word)
     public function titleCase()
     {
         return ucwords(strtolower($this->string));
     }
-    
+
     // Method to convert the string to a camelCase representation
     public function toCamelCase()
     {
@@ -30,6 +30,20 @@ trait CaseTrait {
         return lcfirst(implode('', $words));
     }
 
+    // Method to return an UpperCamelCase version of the supplied string
+    public function toUpperCamelCase()
+    {
+        $words = preg_split('/[^a-zA-Z0-9]+/', $this->string);
+        $upperCamelCase = '';
+
+        foreach ($words as $word) {
+            $upperCamelCase .= ucfirst(strtolower($word));
+        }
+
+        return $upperCamelCase;
+    }
+
+
     // Method to convert the string to a valid variable name (camelCase)
     public function toValidVariableName()
     {
@@ -37,7 +51,7 @@ trait CaseTrait {
         $words = array_map('ucfirst', array_map('strtolower', $words));
         return lcfirst(implode('', $words));
     }
-    
+
     // Method to convert the string to a valid class name (PascalCase)
     public function toValidClassName()
     {
@@ -62,20 +76,4 @@ trait CaseTrait {
         }
         return $caseSwapped;
     }
-
-/** Checkers /////////////////////////////////////////*/
-    
-    // Method to check if the string is in all uppercase
-    public function isUpperCase()
-    {
-        return $this->string === strtoupper($this->string);
-    }
-
-    // Method to check if the string is in all lowercase
-    public function isLowerCase()
-    {
-        return $this->string === strtolower($this->string);
-    }
-
-
 }
