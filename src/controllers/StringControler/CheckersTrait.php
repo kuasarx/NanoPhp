@@ -71,8 +71,6 @@ trait CheckersTrait {
         return false;
     }
 
-    
-
     // Method to check if the string contains only alphabetic characters
     public function isAlpha()
     {
@@ -179,7 +177,7 @@ trait CheckersTrait {
     {
         return preg_match('/[A-Z]/', $this->string) === 1;
     }
-    
+
     // Method to check if the string is in all uppercase
     public function isUpperCase()
     {

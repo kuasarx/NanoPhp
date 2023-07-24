@@ -214,10 +214,10 @@ trait ExtractTrait {
     }
  
     // Method to get the ASCII value of the first character in the string
-     public function ord()
-     {
-         return ord($this->string);
-     }
+    public function ord()
+    {
+        return ord($this->string);
+    }
 
     // Method to return the longest common prefix between the string and $otherStr
     public function longestCommonPrefix($otherStr)

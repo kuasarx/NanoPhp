@@ -84,4 +84,32 @@ trait ParsingTrait {
         }
         return $hex;
     }
+
+    // convert numbers to words
+    public function numbersToWords($number = 0, $lang = 'en'){
+        $decimalsConjunctionArray = array(
+            'en' => 'and',
+            'fr' => 'et',
+            'es' => 'y',
+            'it' => 'e',
+            'de' => 'und',
+            'pt' => 'e',
+            'ru' => 'и',
+            'nl' => 'en',
+            'pl' => 'i',
+            'ua' => 'i'
+        );
+        if (version_compare(PHP_VERSION, '5.3.0', '<') || !class_exists('NumberFormatter')) {
+            exit('You need PHP 5.3 or above, and php_intl extension');
+        }
+
+        $formatter = new \NumberFormatter($lang, \NumberFormatter::SPELLOUT);
+        list($integerPart, $decimalPart) = explode('.', number_format($number, 2, '.', ''));
+
+        $integerPartInWords = $formatter->format($integerPart);
+        $decimalPartInWords = $formatter->format($decimalPart);
+
+        return $integerPartInWords . ' '.$decimalsConjunctionArray[$lang].' ' . $decimalPartInWords;
+    }
+    
 }
