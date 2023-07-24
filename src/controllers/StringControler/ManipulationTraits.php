@@ -201,6 +201,13 @@ trait ManipulationTraits {
         return strtr($this->string, $windows1252Chars);
     }
 
+    // Method to convert spaces to tabs
+    public function convertSpacesToTabs($tabLength = 4)
+    {
+        // Use preg_replace() with a regular expression to find consecutive spaces and replace them with a tab
+        return preg_replace('/ {' . $tabLength . '}/', "\t", $this->string);
+    }
+
 
 
 

@@ -15,6 +15,31 @@ trait ReplaceTrait {
         return trim($this->string);
     }
 
+    // Method to remove whitespace from the start of the string
+    public function trimLeft($characters = null)
+    {
+        if ($characters === null) {
+            return ltrim($this->string);
+        }
+
+        // Remove whitespace and custom characters from the start of the string
+        $pattern = '/^[' . preg_quote($characters, '/') . '\s]+/u';
+        return preg_replace($pattern, '', $this->string);
+    }
+
+    // Method to remove whitespace from the end of the string
+    public function trimRight($charsToRemove = null)
+    {
+        if ($charsToRemove !== null) {
+            $trimmedString = rtrim($this->string, $charsToRemove);
+        } else {
+            // Use the regex pattern to remove whitespace and Unicode whitespace
+            $trimmedString = preg_replace('/\s+$/u', '', $this->string);
+        }
+
+        return $trimmedString;
+    }
+
     // Method to remove a specific substring from the string
     public function remove($substring)
     {

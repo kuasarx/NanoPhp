@@ -45,6 +45,20 @@ trait ExtractTrait {
         return substr($this->string, $start, $length);
     }
 
+    // Method to get the first occurrence of a substring
+    public function firstOccurrence($substring)
+    {
+        $pos = strpos($this->string, $substring);
+        return $pos !== false ? substr($this->string, 0, $pos + strlen($substring)) : '';
+    }
+
+    // Method to get the last occurrence of a substring
+    public function lastOccurrence($substring)
+    {
+        $pos = strrpos($this->string, $substring);
+        return $pos !== false ? substr($this->string, $pos) : '';
+    }
+
     // Method to get the substring between two other substrings
     public function substringBetween($start, $end)
     {

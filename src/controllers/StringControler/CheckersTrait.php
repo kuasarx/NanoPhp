@@ -71,19 +71,7 @@ trait CheckersTrait {
         return false;
     }
 
-    // Method to get the first occurrence of a substring
-    public function firstOccurrence($substring)
-    {
-        $pos = strpos($this->string, $substring);
-        return $pos !== false ? substr($this->string, 0, $pos + strlen($substring)) : '';
-    }
-
-    // Method to get the last occurrence of a substring
-    public function lastOccurrence($substring)
-    {
-        $pos = strrpos($this->string, $substring);
-        return $pos !== false ? substr($this->string, $pos) : '';
-    }
+    
 
     // Method to check if the string contains only alphabetic characters
     public function isAlpha()
@@ -172,7 +160,7 @@ trait CheckersTrait {
          return preg_match('/^\h*{?[0-9a-f]{8}\h*-?\h*[0-9a-f]{4}\h*-?\h*4[0-9a-f]{3}\h*-?\h*[89ab][0-9a-f]{3}\h*-?\h*[0-9a-f]{12}\h*}?\h*$/i', $this->string) === 1;
      }
 
-    // Method to check if the string is serialized
+     // Method to check if the string is serialized
     public function isSerialized()
     {
         $data = @unserialize($this->string);
@@ -190,6 +178,18 @@ trait CheckersTrait {
     public function containsUpperCaseChar()
     {
         return preg_match('/[A-Z]/', $this->string) === 1;
+    }
+    
+    // Method to check if the string is in all uppercase
+    public function isUpperCase()
+    {
+        return $this->string === strtoupper($this->string);
+    }
+
+    // Method to check if the string is in all lowercase
+    public function isLowerCase()
+    {
+        return $this->string === strtolower($this->string);
     }
 
 }

@@ -4,7 +4,7 @@ require_once 'StringControler/CheckersTrait.php';
 require_once 'StringControler/ReplacerTrait.php';
 require_once 'StringControler/CountTraits.php';
 require_once 'StringControler/ManipulationTraits.php';
-require_once 'StringControler/ParsingTraits.php';
+require_once 'StringControler/ParsingTrait.php';
 
 class Str
 {
