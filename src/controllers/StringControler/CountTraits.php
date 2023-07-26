@@ -31,6 +31,7 @@ trait CountTrait{
         return count($lines);
     }
 
+    // Method to count the whitespaces in the string
     public function countWhitespaces()
     {
         // Use preg_match_all() to count the whitespaces in the string
