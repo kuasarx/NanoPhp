@@ -66,6 +66,7 @@ trait ParsingTrait {
         return $result;
     }
 
+    // Method to convert the string to a binary representation
     public function toBinary()
     {
         $binary = '';

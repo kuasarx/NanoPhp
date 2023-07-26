@@ -1,7 +1,7 @@
 
 # Strings Controler `Str()`
 
-The `Str()` class is a utility class designed to facilitate various string manipulation tasks within a PHP application. It offers a wide range of methods that enable developers to perform common string operations easily and efficiently.
+The `Str()` class is a utility class designed to facilitate various string manipulation tasks within a PHP application. It offers a wide range of methods that enable to perform common string operations easily and efficiently.
 
 
 
@@ -292,7 +292,7 @@ if ($string->contains("Hello")) {
 
 // Output: "Substring found!"
 ```
-In this example, the method checks whether the string "Hello, World!" contains the substring "Hello." As the substring is present in the original string, it outputs "Substring found!". If the substring were not present, it would output "Substring not found!". This method is useful for quickly verifying the existence of specific substrings within strings and enables developers to take appropriate actions based on the results.
+In this example, the method checks whether the string "Hello, World!" contains the substring "Hello." As the substring is present in the original string, it outputs "Substring found!". If the substring were not present, it would output "Substring not found!". This method is useful for quickly verifying the existence of specific substrings within strings and enables to take appropriate actions based on the results.
 
 ### `containsAny`
 
@@ -405,7 +405,7 @@ In this example, the `isBase64()` method is used to check if the provided string
 
 ### `containsOnlyHexChars`
 
-This method is a convenient function within the `Str` class that enables developers to determine if a given string exclusively contains hexadecimal characters. It returns a boolean value (`true` or `false`) indicating whether the string is composed solely of characters in the hexadecimal format.
+This method is a convenient function within the `Str` class that enables to determine if a given string exclusively contains hexadecimal characters. It returns a boolean value (`true` or `false`) indicating whether the string is composed solely of characters in the hexadecimal format.
 
 **Parameters:**
 - none.
@@ -1085,7 +1085,7 @@ The `removeMultiple()` method allows to remove duplicate characters from a given
 - none.
 
 ```php
-$string = new StringHelper("abracadabra");
+$string = new Str("abracadabra");
 echo $string->removeDuplicates(); // Output: "abrcd"
 ```
 
@@ -1098,9 +1098,715 @@ The `removeNonLetters()` method allows to remove all non-letter characters (A-Z 
 - none.
 
 ```php
-$string = new StringHelper("Hello, 123 World!");
+$string = new Str("Hello, 123 World!");
 echo $string->removeNonLetters(); // Output: "HelloWorld"
 ```
+
+### Parsing
+
+### `hash`
+
+This method converts the given string into a hash using a specified hashing algorithm. By default, the SHA-256 algorithm is used, but you can choose from various other algorithms supported by PHP's hash() function.
+    
+**Parameters:**
+- `$algorithm`(optional): The hashing algorithm to be used. The default value is 'sha256'. You can provide any hashing algorithm supported by PHP's hash() function, such as 'md5', 'sha1', 'sha512', etc.
+
+```php
+$string = new Str("MySecretPassword123");
+
+// Use the default SHA-256 algorithm
+echo $string->hash();          // Output: "899694763f7c286b5ef8e53d3914cd0a4091f481d90b9537e1e57f4d36d315af"
+
+// Use the MD5 algorithm
+echo $string->hash('md5');     // Output: "4d3e20e0a14a11bbdcda49b17762ee2b"
+```
+
+### `toJson`
+
+The `toJson()` method allows to remove all non-letter characters (A-Z and a-z) from the given string. It uses a regular expression pattern to match and remove any characters that are not letters, effectively leaving only the alphabetic characters in the resulting string.    
+**Parameters:**
+-  none.
+
+```php
+// Instantiate the Str class with a sample string
+$string = new Str("{'name': 'John', 'age': 30, 'city': 'New York'}");
+
+// Call the toJson() method to convert the string to JSON
+$jsonRepresentation = $string->toJson();
+
+// Output the result
+echo $jsonRepresentation;
+// Output: "{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}"
+```
+
+### `toHumanFileSize`
+
+The `toHumanFileSize()` method is used to convert a given string to a human-readable file size representation. It calculates the size of the string in bytes and then formats it with appropriate units (B, KB, MB, GB, or TB) based on its magnitude. 
+**Parameters:**
+-  none.
+
+```php
+$string = new Str("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+echo $string->toHumanFileSize(); // Output: "66 B"
+```
+
+### `toRoman`
+
+The `toRoman()` method converts an integer represented as a string to its Roman numeral representation. The method accepts no parameters and assumes that the string contains a valid integer. It follows the conventional Roman numeral representation, where combinations of letters represent specific numeric values.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new Str("1984");
+echo $string->toRoman();  // Output: "MCMLXXXIV"
+```
+
+### `romanToNumber`
+
+The `romanToNumber()` method converts a Roman numeral represented by the input string into its corresponding numeric value. This method is useful for converting Roman numeral representations to their numeric equivalents.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new Str("XIV");
+echo $string->romanToNumber();   // Output: 14
+```
+
+### `toBinary`
+
+The `toBinary()` method convert the given string into its binary representation. This method iterates through each character of the input string and converts its ASCII value into an 8-bit binary representation. The resulting binary strings are concatenated to produce the final binary representation of the entire input string.
+
+**Parameters:**
+-  none.
+
+```php
+$$string = new Str("Hello, World!");
+
+echo $string->toBinary();   // Output: 0100100001100101011011000110110001101111001000000101011101101111011100100110110001100100
+```
+
+### `toHex`
+
+The `toHex()` method is used to convert a given string into its hexadecimal representation. It returns a string containing the hexadecimal representation of each character in the original string.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new Str("Hello, World!");
+echo $string->toHex();  // Output: "48656c6c6f2c20576f726c64"
+```
+
+### `numbersToWords`
+
+The `numbersToWords()` method converts numeric values to their corresponding word representations. It uses the `NumberFormatter` class, available in PHP 5.3 and above with the `php_intl` extension, to spell out the given number in words. The method provides an optional parameter to specify the language in which the words should be generated, with English (`en`) as the default language.
+
+**Parameters:**
+- `$number` (optional, default: `0`): The numeric value that needs to be converted to words. It can be an integer or a float value.
+- `$lang` (optional, default: '`en`'): The two-letter language code representing the desired language for word generation. Supported languages include:
+    - English (`en`)
+    - French (`fr`)
+    - Spanish (`es`)
+    - Italian (`it`)
+    - German (`de`)
+    - Portuguese (`pt`)
+    - Russian (`ru`)
+    - Dutch (`nl`)
+    - Polish (`pl`)
+    - Ukrainian (`ua`).
+
+```php
+$string = new Str();
+
+echo $string->numbersToWords(12345.67, 'en'); // Output: "twelve thousand three hundred forty-five and sixty-seven"
+echo $string->numbersToWords(12345.67, 'fr'); // Output: "douze mille trois cent quarante-cinq et soixante-sept"
+echo $string->numbersToWords(12345.67, 'es'); // Output: "doce mil trescientos cuarenta y cinco y sesenta y siete"
+// ... and more language options available.
+```
+
+### Extract
+
+### `extractChars`
+
+The `extractChars()` method is used to split the given string into an array of individual characters, preserving multibyte characters and ignoring empty elements. This function is particularly useful when you need to process each character of a string individually.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new Str("Hello, World!");
+$chars = $string->extractChars();
+
+print_r($chars);
+/* Returns:
+Array
+(
+    [0] => H
+    [1] => e
+    [2] => l
+    [3] => l
+    [4] => o
+    [5] => ,
+    [6] =>
+    [7] => W
+    [8] => o
+    [9] => r
+    [10] => l
+    [11] => d
+    [12] => !
+)
+*/
+```
+
+### `getFirstNChars`
+
+The `getFirstNChars()` method allows to extract the first `$n` characters from a given string. It is a straightforward and efficient way to obtain a substring of fixed length from the beginning of the string.
+
+**Parameters:**
+-  `$n` (int): The number of characters to extract from the start of the string.
+
+```php
+$string = new StringHelper("Hello, World!");
+
+echo $string->getFirstNChars(5);   // Output: "Hello"
+echo $string->getFirstNChars(7);   // Output: "Hello, "
+echo $string->getFirstNChars(0);   // Output: ""
+```
+**Note:** The method returns an empty string if `$n` is zero or negative. If `$n` is greater than the length of the string, it returns the entire string. The `getFirstNChars()` method is useful for situations where you need to extract a specific prefix or fixed-length substring from the original string.
+
+
+### `getLastChars`
+
+The `getLastChars()` method allows to extract the last $n characters from a given string. The method takes an integer parameter, $n, representing the number of characters to retrieve from the end of the string.
+
+**Parameters:**
+-  `$n` (int): The number of characters to extract from the end of the string.
+
+```php
+$string = new StringHelper("Hello, World!");
+
+// Extract the last 5 characters
+$lastChars = $string->getLastChars(5);
+
+echo $lastChars; // Output: "World"
+```
+
+### `extractWords`
+
+The `extractWords()` method allows  to extract an array of words from the given string, splitting the string based on whitespace (spaces, tabs, or newlines).
+
+**Parameters:**
+-  none.
+
+```php
+$string = new StringHelper("Hello, World! How are you?");
+$wordsArray = $string->extractWords();
+
+// Output: Array ( [0] => "Hello," [1] => "World!" [2] => "How" [3] => "are" [4] => "you?" )
+print_r($wordsArray);
+```
+
+### `extractLines`
+
+The `extractLines()` method allows to extract individual lines from a given string and return them as an array. This method splits the input string based on line breaks (`\r\n`, `\n`, or `\r`) and separates each line into distinct elements of the resulting array.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new StringHelper("Hello, World!\nHow are you?\nI'm doing fine.");
+
+// Call the extractLines() method
+$linesArray = $string->extractLines();
+
+// Output the array of lines
+print_r($linesArray);
+
+/* Output: Array
+(
+    [0] => Hello, World!
+    [1] => How are you?
+    [2] => I'm doing fine.
+)
+*/
+```
+
+### `extractWordsReverse`
+
+The `extractWordsReverse()` method allows to extract words from the given string and return them as an array in reverse order. This method can be particularly useful when dealing with natural language processing or text analysis tasks where the words need to be processed in reverse sequence.
+
+**Parameters:**
+-  none.
+
+```php
+$string = new StringHelper("The quick brown fox jumps over the lazy dog");
+
+$words = $string->extractWordsReverse();
+
+print_r($words);
+
+
+/* Output: Array
+(
+    [0] => dog
+    [1] => lazy
+    [2] => the
+    [3] => over
+    [4] => jumps
+    [5] => fox
+    [6] => brown
+    [7] => quick
+    [8] => The
+)
+*/
+```
+
+### `extract`
+
+The `extract()` method allows to extract a substring from the original string based on the provided starting position and, optionally, a specified length.
+
+**Parameters:**
+- `$start` (integer): The starting position from which to begin extracting the substring. The index is zero-based, where the first character has an index of 0, the second character has an index of 1, and so on.
+- `$length` (integer, optional): The length of the substring to extract. If not provided, the method will extract all characters from the starting position to the end of the original string.
+
+```php
+$string = new StringHelper("Hello, World!");
+
+echo $string->extract(0, 5); // Output: "Hello"
+echo $string->extract(7);    // Output: "World!"
+```
+In the first example, we use the `extract()`method to extract the first five characters from the original string, resulting in "Hello". In the second example, we only specify the starting position, and thus the method extracts all characters from the index 7 onwards, resulting in "World!". This versatile method is useful for retrieving specific parts of a string, such as substrings or sections of interest, based on given positions and lengths.
+
+### `firstOccurrence`
+
+The `firstOccurrence()` method allows to retrieve the substring from the beginning of the string up to the first occurrence of a specified substring. If the given substring is not found, an empty string is returned.
+
+**Parameters:**
+- `$substring` (string): The substring to search for in the original string.
+
+```php
+$string = new StringHelper("This is an example string.");
+
+// Get the first occurrence of "is"
+$result = $string->firstOccurrence("is");
+
+echo $result; // Output: "This is"
+```
+In this example, the `firstOccurrence()` method searches for the first occurrence of the substring "is" in the original string "This is an example string." It then returns the substring "This is" that appears before the first occurrence of "is."
+
+
+### `lastOccurrence`
+
+The `lastOccurrence()` method returns the substring of the original string that occurs last in the provided substring.
+
+**Parameters:**
+- `$substring` (string): The substring to search for in the original string.
+
+```php
+$string = new StringHelper("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+$lastOccurrence = $string->lastOccurrence("sit");
+echo $lastOccurrence; // Output: "sit amet, consectetur adipiscing elit."
+
+```
+
+### `substringBetween`
+
+The `substringBetween()` method extracts the substring from a given string that is located between two specified substrings, $start and $end. It returns the extracted substring or an empty string if either the start or end substring is not found.
+
+**Parameters:**
+- `$start` (string): The starting substring to identify the beginning of the desired substring.
+- `$end` (string): The ending substring to identify the end of the desired substring.
+
+```php
+$string = new StringHelper("The quick brown fox jumps over the lazy dog.");
+
+// Extract the substring between "quick" and "jumps"
+$result = $string->substringBetween("quick", "jumps");
+echo $result; // Output: " brown fox "
+
+// Extract the substring between "the" and "dog"
+$result = $string->substringBetween("the", "dog");
+echo $result; // Output: " quick brown fox jumps over the lazy "
+
+// Substrings not found, returns an empty string
+$result = $string->substringBetween("brown", "jumps");
+echo $result; // Output: ""
+```
+**Note:** The `substringBetween` method looks for the first occurrence of the `$start` substring and then searches for the `$end` substring after the `$start` position. If both substrings are found, it returns the substring between them. If either `$start` or `$end` is not present in the string, it returns an empty string.
+
+### `fromNthOccurrence`
+
+The `fromNthOccurrence()` method is used to retrieve a substring from the nth occurrence of a specified substring within the original string. It allows developers to extract portions of the string based on occurrence positions, enabling various text extraction scenarios.
+
+**Parameters:**
+- `$substring` (string): The substring to search for within the original string.
+- `$n` (int): The occurrence index (1-based) from which the extraction should start.
+
+```php
+$string = new StringHelper("The quick brown fox jumps over the lazy dog.");
+
+$substring = $string->fromNthOccurrence('o', 2);
+echo $substring; // Output: "umps over the lazy dog."
+```
+**Note:** In the example above, the `fromNthOccurrence` method is used to find the second occurrence of the substring "o" within the original string. It returns the substring starting from that position, resulting in the output "umps over the lazy dog." This function is particularly useful for extracting specific text segments based on the number of occurrences within a longer string.
+
+
+### `untilNthOccurrence`
+
+The `untilNthOccurrence()` method extracts the substring from the beginning of the original string up to the nth occurrence of a specified substring. If the substring does not occur at least n times, it returns an empty string.
+
+**Parameters:**
+- `$substring` (string): The substring to search for in the original string.
+- `$n` (int): The desired occurrence number (1-indexed) of the `$substring` to extract the substring until.
+
+```php
+$string = new StringHelper("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+$result = $string->untilNthOccurrence(' ', 3);
+echo $result; // Output: "Lorem ipsum dolor"
+```
+**Note:** In the example above, the method `untilNthOccurrence(' ', 3)` finds the third occurrence of a space (" ") in the original string and returns the substring up to that point, resulting in the string "Lorem ipsum dolor". If the specified substring does not occur at least three times, the method will return an empty string.
+
+### `betweenNthOccurrences`
+
+The `betweenNthOccurrences()` method extracts the substring between the nth and mth occurrences of a specified substring within the original string.
+
+**Parameters:**
+- `$substring` (string): The substring to search for and locate occurrences.
+- `$n` (int): The nth occurrence of the substring to begin the extraction.
+- `$m` (int): The mth occurrence of the substring to end the extraction.
+
+```php
+$string = new StringHelper("the quick brown fox jumps over the lazy dog.");
+
+$result = $string->betweenNthOccurrences("the", 1, 2);
+echo $result; // Output: " quick brown fox jumps over "
+```
+**Note:** In the above example, the `betweenNthOccurrences` method is used to extract the substring occurring between the 1st and 2nd occurrences of the word "the" (case-sensitive) in the original string. The extracted substring is then stored in the `$result` variable and subsequently displayed.
+
+
+### `afterLast`
+
+The `afterLast()` method retrieves the substring that appears after the last occurrence of a specified substring within the original string. If the substring is not found, an empty string is returned.
+
+**Parameters:**
+- `$substring` (string): The substring to search for within the original string.
+
+```php
+$string = new StringHelper("This is a sample text. This text is used for demonstration purposes.");
+
+$substring = "is";
+$result = $string->afterLast($substring);
+
+echo $result; // Output: " used for demonstration purposes."
+```
+
+### `beforeLast`
+
+The `beforeLast()` method retrieves  the substring before the last occurrence of a given substring within the original string. It helps simplify tasks where you need to extract a portion of the string leading up to a specific marker or delimiter.
+
+**Parameters:**
+- `$substring` (string): The substring used as the marker to locate the last occurrence in the original string.
+
+```php
+$string = new StringHelper("Hello, World! How are you?");
+$substring = "l";
+$result = $string->beforeLast($substring);
+
+echo $result; // Output: "Hello, World! How are you?"
+```
+
+### `extractUrls`
+
+The `extractUrls()` method extract URLs from the given string. It uses regular expressions to find all occurrences of URLs, including both HTTP(S) and www URLs. The method returns an array containing all the extracted URLs found in the string.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Visit our website at https://www.example.com. For more information, check out http://blog.example.com.");
+
+$urls = $string->extractUrls();
+print_r($urls);
+/* Output: 
+Array
+(
+    [0] => https://www.example.com
+    [1] => http://blog.example.com
+)
+*/
+```
+
+### `extractEmails`
+
+The `extractEmails()` method extract email addresses from a given string. It utilizes a regular expression pattern to identify and retrieve all valid email addresses contained within the input string.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Contact us at info@example.com or support@example.org for assistance.");
+$emails = $string->extractEmails();
+
+print_r($emails);
+$string = new StringHelper("Contact us at info@example.com or support@example.org for assistance.");
+$emails = $string->extractEmails();
+
+print_r($emails);
+
+/* Output: 
+Array
+(
+    [0] => info@example.com
+    [1] => support@example.org
+)
+*/
+```
+
+### `extractPhoneNumbers`
+
+The `extractPhoneNumbers()` method extract phone numbers from a given string. It employs a regular expression pattern to identify phone number patterns and returns an array of all the matched phone numbers found within the string.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Contact us at +1 (123) 456-7890 or 987-654-3210 for assistance.");
+
+$phoneNumbers = $string->extractPhoneNumbers();
+print_r($phoneNumbers);
+
+/* Output: 
+Array
+(
+    [0] => +1 (123) 456-7890
+    [1] => 987-654-3210
+)
+*/
+```
+
+### `extractIPv4`
+
+The `extractIPv4()` method extract all IPv4 addresses present in a given string. This method utilizes regular expressions to identify valid IPv4 addresses and returns them as an array.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Lorem ipsum 192.168.1.1 dolor sit amet, consectetur 10.0.0.1 adipiscing elit.");
+
+$ipv4Addresses = $string->extractIPv4();
+print_r($ipv4Addresses);
+
+/* Output: 
+Array
+(
+    [0] => 192.168.1.1
+    [1] => 10.0.0.1
+)
+*/
+```
+
+### `extractIPv6Addresses`
+
+The `extractIPv4()` method extract IPv6 addresses from a given string. It uses regular expressions to find all occurrences of valid IPv6 addresses within the input string and returns them as an array.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("The server has the following IPv6 addresses: 2001:0db8:85a3:0000:0000:8a2e:0370:7334 and 2001:0db8:85a3:0000:0000:8a2e:0370:7335");
+
+$ipv6Addresses = $string->extractIPv6Addresses();
+print_r($ipv6Addresses);
+
+/* Output: 
+Array
+(
+    [0] => 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+    [1] => 2001:0db8:85a3:0000:0000:8a2e:0370:7335
+)
+*/
+```
+
+### `ord`
+
+The `ord()` method retrieve the ASCII value of the first character in the provided string.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Hello");
+echo $string->ord(); // Output: 72 (ASCII value of 'H')
+```
+The `ord()` method can be used whenever there is a need to retrieve the ASCII value of the first character in a string. It can be particularly useful when dealing with character encoding, comparing characters, or performing other low-level string operations.
+
+
+### `longestCommonPrefix`
+
+The `longestCommonPrefix()` method returns the longest common prefix between the current string and the given `$otherStr`. It determines the characters that are common at the beginning of both strings and constructs the prefix accordingly.
+
+**Parameters:**
+- `$otherStr` (string): The string to compare with the current string for finding the longest common prefix.
+
+```php
+$string = new StringHelper("apple");
+$otherStr = "applesauce";
+
+$prefix = $string->longestCommonPrefix($otherStr);
+echo $prefix; // Output: "app"
+```
+In this example, the `longestCommonPrefix` method is used to find the longest common prefix between the strings `"apple"` and `"applesauce"` resulting in the output `"app"` This method is particularly useful for scenarios where you need to identify shared prefixes in different strings, such as when handling file paths or variable names in a program.
+
+### `longestCommonSuffix `
+
+The `longestCommonSuffix()` method returns the longest common suffix between the current string and the given `$otherStr`. It determines the characters that are common at the end of both strings and constructs the suffix accordingly.
+
+**Parameters:**
+- `$otherStr` (string): The string to compare with the current string for finding the longest common suffix.
+
+```php
+$string = new StringHelper("apple");
+$otherStr = "pineapple";
+
+$suffix = $string->longestCommonSuffix($otherStr);
+echo $suffix; // Output: "apple"
+```
+In this example, the `longestCommonSuffix` method is called on the `$string` object with the `$otherStr` being `"pineapple"` The method finds the longest common suffix between `"apple"` and `"pineapple"` which is "`apple"` and returns it as the result.
+
+### `longestCommonSubstring `
+
+The `longestCommonSubstring()` method finds the longest common substring between two given strings. It takes one parameter, `$otherStr`, which represents the second string to compare with the original string.
+
+**Parameters:**
+- `$otherStr` (string): The string to compare with the current string for finding the longest common substring.
+
+```php
+$string1 = new StringHelper("programming");
+$string2 = "programmer";
+
+$result = $string1->longestCommonSubstring($string2);
+echo $result; // Output: "gramm"
+```
+In this example, the method is called on a `Str` instance with the original string "programming." The second string "programmer" is passed as an argument. The method calculates the longest common substring between the two strings and returns "gramm" as the result.
+
+
+### Count
+
+
+### `length `
+
+The `length()` method allows to quickly determine the length of a given string. It calculates the number of characters present in the string and returns the count as an integer.
+
+**Parameters:**
+- none.
+
+```php
+// Instantiate the StringHelper class with the string "Hello, World!"
+$string = new StringHelper("Hello, World!");
+
+// Call the length() method to get the length of the string
+$length = $string->length();
+
+// Output the result
+echo $length; // Output: 13
+```
+
+### `countCharacters `
+
+The `countCharacters()` method allows determine the number of characters in the given string. It calculates the length of the string and returns the count as an integer value.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Hello, World!");
+$characterCount = $string->countCharacters();
+
+echo $characterCount; // Output: 13
+```
+
+### `countWords`
+
+The `countWords()` method is used to count the number of words in the given string.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Hello, this is a sample text with multiple words.");
+
+// Call the countWords() method to get the number of words in the string
+$wordCount = $string->countWords();
+
+echo $wordCount; // Output: 10
+```
+
+### `countLines`
+
+The `countLines()` method is used to count the number of lines in a given string. It splits the string into an array of lines using regular expressions to detect line breaks (`\r\n`, `\n`, or `\r`), and then returns the total count of lines found.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Hello, World!\nHow are you?\nI'm doing fine.");
+
+// Call the countLines() method to get the number of lines in the string
+$lineCount = $string->countLines();
+
+// Output: 3
+echo $lineCount;
+```
+
+### `countWhitespaces`
+
+The `countWhitespaces()` method is used to count the number of whitespace characters (spaces, tabs, newlines) present in a given string. It uses regular expression matching to efficiently find all whitespace occurrences and returns their count.
+
+**Parameters:**
+- none.
+
+```php
+$string = new StringHelper("Hello,   World!\nHow\tare you?");
+
+echo $string->countWhitespaces(); // Output: 6 (1 space, 3 spaces, 1 newline, 1 tab)
+```
+
+### `countOccurrences`
+
+The `countOccurrences()` method is used to count the number of occurrences of a specified substring within the given string.
+
+**Parameters:**
+- none.
+
+```php
+// Instantiate the StringHelper class with a sample string
+$string = new StringHelper("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+// Count the occurrences of the substring "Lorem"
+$count = $string->countOccurrences("Lorem");
+
+echo $count; // Output: 2
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
